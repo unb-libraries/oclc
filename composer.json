@@ -2,6 +2,7 @@
   "name": "unb-libraries/oclc_api",
   "description": "Connect to OCLC APIs in Drupal.",
   "type": "drupal-module",
+  "minimum-stability": "dev",
   "require": {
     "drupal/key": "1.14",
     "unb-libraries/drupal-addon": "dev-8.x-1.x"
