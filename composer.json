@@ -4,8 +4,7 @@
   "type": "drupal-module",
   "minimum-stability": "dev",
   "require": {
-    "drupal/key": "1.14",
-    "unb-libraries/drupal-addon": "dev-8.x-1.x"
+    "drupal/key": "1.14"
   },
   "license": "MIT",
   "authors": [

@@ -4,5 +4,4 @@ description: 'Connect to OCLC APIs in Drupal.'
 core: 8.x
 package: 'Web Services'
 dependencies:
-  - lib_unb_custom_entity
   - key
