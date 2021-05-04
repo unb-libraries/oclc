@@ -1,0 +1,24 @@
+{
+  "name": "unb-libraries/oclc_api",
+  "description": "Connect to OCLC APIs in Drupal.",
+  "type": "drupal-module",
+  "require": {
+    "drupal/key": "1.14",
+    "unb-libraries/drupal-addon": "dev-8.x-1.x"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Patrick Schilf",
+      "email": "patrick.schilf@unb.ca"
+    },
+    {
+      "name": "Brian Cassidy",
+      "email": "brian.cassidy@unb.ca"
+    },
+    {
+      "name": "UNB Libraries",
+      "email": "libsupport@unb.ca"
+    }
+  ]
+}
