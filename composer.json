@@ -3,6 +3,12 @@
   "description": "Connect to OCLC APIs in Drupal.",
   "type": "drupal-module",
   "minimum-stability": "dev",
+  "repositories": [
+      {
+          "type": "composer",
+          "url": "https://packages.drupal.org/8"
+      }
+  ],
   "require": {
     "drupal/key": "1.14"
   },
