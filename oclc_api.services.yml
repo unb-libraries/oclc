@@ -1,4 +1,14 @@
 services:
+  oclc_api.settings:
+    class: Drupal\Core\Config\ImmutableConfig
+    factory: [ '@config.factory', 'get' ]
+    arguments:
+      - 'oclc_api.settings'
+    public: false
+  oclc_api.config:
+    class: Drupal\oclc_api\Config\OclcApiConfig
+    arguments:
+      - '@oclc_api.settings'
   plugin.manager.oclc_api:
     class: Drupal\oclc_api\Plugin\oclc\OclcApiManager
     parent: default_plugin_manager

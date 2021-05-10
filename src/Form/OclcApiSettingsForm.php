@@ -4,6 +4,7 @@ namespace Drupal\oclc_api\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\oclc_api\Config\OclcApiConfigInterface;
 
 /**
  * Settings form for oclc_api module.
@@ -17,7 +18,7 @@ class OclcApiSettingsForm extends ConfigFormBase {
    */
   protected function getEditableConfigNames() {
     return [
-      'default' => 'oclc_api.settings',
+      'default' => OclcApiConfigInterface::CONFIG_ID,
     ];
   }
 
@@ -25,7 +26,7 @@ class OclcApiSettingsForm extends ConfigFormBase {
    * {@inheritDoc}
    */
   public function getFormId() {
-    return "oclc_api.settings_form";
+    return "{$this->getEditableConfigNames()['default']}_form";
   }
 
   /**
@@ -35,11 +36,11 @@ class OclcApiSettingsForm extends ConfigFormBase {
     $form = parent::buildForm($form, $form_state);
 
     $config_names = $this->getEditableConfigNames();
-    $form['institution_id'] = [
+    $form[OclcApiConfigInterface::INSTITUTION_ID] = [
       '#type' => 'textfield',
       '#title' => $this->t('Institution ID'),
       '#default_value' => $this->config($config_names['default'])
-        ->get('institution_id'),
+        ->get(OclcApiConfigInterface::INSTITUTION_ID),
     ];
 
     return $form;
