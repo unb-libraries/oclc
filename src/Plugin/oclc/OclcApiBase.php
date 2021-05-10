@@ -3,36 +3,64 @@
 namespace Drupal\oclc_api\Plugin\oclc;
 
 use Drupal\Component\Plugin\PluginBase;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\oclc_api\Oclc\OclcAuthorizationTrait;
+use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
 use Psr\Http\Message\ResponseInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Base class for OCLC API plugins.
  *
  * @package Drupal\oclc_api\Plugin\oclc
  */
-abstract class OclcApiBase extends PluginBase implements OclcApiInterface {
+abstract class OclcApiBase extends PluginBase implements OclcApiInterface, ContainerFactoryPluginInterface {
 
   use OclcAuthorizationTrait;
 
   /**
+   * The Http service.
+   *
+   * @var \GuzzleHttp\ClientInterface
+   */
+  protected $http;
+
+  /**
    * Inject the http service.
    *
-   * @return \GuzzleHttp\Client
+   * @return \GuzzleHttp\ClientInterface
    *   An http client object.
    */
   protected function http() {
-    return \Drupal::httpClient();
+    return $this->http;
+  }
+
+  /**
+   * Constructs an OCLC plugin instance.
+   *
+   * @param array $configuration
+   *   A configuration array containing information about the plugin instance.
+   * @param string $plugin_id
+   *   The plugin_id for the plugin instance.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
+   * @param \GuzzleHttp\ClientInterface $http
+   *   An HTTP client.
+   */
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, ClientInterface $http) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition);
+    $this->http = $http;
+    if (isset($configuration['authorization'])) {
+      $this->oclcAuthorizer = $configuration['authorization'];
+    }
   }
 
   /**
    * {@inheritDoc}
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition);
-    if (isset($configuration['authorization'])) {
-      $this->oclcAuthorizer = $configuration['authorization'];
-    }
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static($configuration, $plugin_id, $plugin_definition, $container->get('http_client'));
   }
 
   /**
