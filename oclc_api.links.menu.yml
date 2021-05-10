@@ -1,0 +1,5 @@
+oclc_api.settings:
+  title: 'OCLC API'
+  parent: system.admin_config_services
+  route_name: oclc_api.settings_form
+  description: 'Configure connections to OCLC APIs.'
