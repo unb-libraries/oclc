@@ -26,8 +26,6 @@ use Psr\Http\Message\ResponseInterface;
  */
 class WmsAvailability extends OclcApiBase {
 
-  const INSTITUTION_ID = '133054';
-
   /**
    * {@inheritDoc}
    */
@@ -36,16 +34,6 @@ class WmsAvailability extends OclcApiBase {
       $scopes[$index] = str_replace("{@institution_id}", $this->getInstitutionId(), $scope);
     }
     return $scopes;
-  }
-
-  /**
-   * Retrieve the OCLC institution ID.
-   *
-   * @return string
-   *   A string.
-   */
-  protected function getInstitutionId() {
-    return self::INSTITUTION_ID;
   }
 
   /**
