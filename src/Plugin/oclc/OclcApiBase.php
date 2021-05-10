@@ -4,6 +4,7 @@ namespace Drupal\oclc_api\Plugin\oclc;
 
 use Drupal\Component\Plugin\PluginBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\oclc_api\Config\OclcApiConfigInterface;
 use Drupal\oclc_api\Oclc\OclcAuthorizationTrait;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -34,6 +35,19 @@ abstract class OclcApiBase extends PluginBase implements OclcApiInterface, Conta
    */
   protected function http() {
     return $this->http;
+  }
+
+  /**
+   * Get the institution ID.
+   *
+   * @return false|string
+   *   A string. FALSE if no institution ID is configured.
+   */
+  protected function getInstitutionId() {
+    if (isset($this->configuration[OclcApiConfigInterface::INSTITUTION_ID])) {
+      return $this->configuration[OclcApiConfigInterface::INSTITUTION_ID];
+    }
+    return FALSE;
   }
 
   /**

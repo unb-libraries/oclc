@@ -6,6 +6,7 @@ use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\DefaultPluginManager;
 use Drupal\oclc_api\Annotation\OclcApi;
+use Drupal\oclc_api\Config\OclcApiConfigInterface;
 
 /**
  * Plugin manager for OCLC API plugins.
@@ -13,6 +14,20 @@ use Drupal\oclc_api\Annotation\OclcApi;
  * @package Drupal\oclc_api\Plugin\oclc
  */
 class OclcApiManager extends DefaultPluginManager implements OclcApiManagerInterface {
+
+  /**
+   * OCLC_API config.
+   *
+   * @var \Drupal\oclc_api\Config\OclcApiConfigInterface
+   */
+  protected $oclcApiConfig;
+
+  /**
+   * @return mixed
+   */
+  protected function oclcApiConfig() {
+    return $this->oclcApiConfig;
+  }
 
   /**
    * Constructs a new OclcApiManager instance.
@@ -24,8 +39,10 @@ class OclcApiManager extends DefaultPluginManager implements OclcApiManagerInter
    *   Cache backend instance to use.
    * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
    *   The module handler to invoke the alter hook with.
+   * @param \Drupal\oclc_api\Config\OclcApiConfigInterface $oclc__api_config
+   *   An oclc_api config object.
    */
-  public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler) {
+  public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler, OclcApiConfigInterface $oclc__api_config) {
     parent::__construct(
       'Plugin/oclc',
       $namespaces,
@@ -40,7 +57,10 @@ class OclcApiManager extends DefaultPluginManager implements OclcApiManagerInter
    * {@inheritDoc}
    */
   public function createInstance($plugin_id, array $configuration = []) {
-    // TODO: Cash building instances.
+    // @todo Cache building instances.
+    if ($institution_id = $this->oclcApiConfig()->getInstitutionId()) {
+      $configuration[OclcApiConfigInterface::INSTITUTION_ID] = $institution_id;
+    }
     return parent::createInstance($plugin_id, $configuration);
   }
 
