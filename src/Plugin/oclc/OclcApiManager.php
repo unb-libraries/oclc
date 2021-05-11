@@ -51,6 +51,7 @@ class OclcApiManager extends DefaultPluginManager implements OclcApiManagerInter
       OclcApi::class);
     $this->alterInfo('oclc_api__info');
     $this->setCacheBackend($cache_backend, 'oclc_api__plugins');
+    $this->oclcApiConfig = $oclc__api_config;
   }
 
   /**

@@ -12,3 +12,5 @@ services:
   plugin.manager.oclc_api:
     class: Drupal\oclc_api\Plugin\oclc\OclcApiManager
     parent: default_plugin_manager
+    arguments:
+      - '@oclc_api.config'
