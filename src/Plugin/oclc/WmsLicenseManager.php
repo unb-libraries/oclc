@@ -54,6 +54,7 @@ class WmsLicenseManager extends OclcApiBase {
       ->getToken();
     return parent::buildHeaders() + [
       'Authorization' => "Bearer {$token}",
+      'Accept' => 'application/json',
     ];
   }
 
