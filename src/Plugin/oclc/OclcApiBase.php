@@ -6,7 +6,6 @@ use Drupal\Component\Plugin\PluginBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\oclc_api\Config\OclcApiConfigInterface;
 use Drupal\oclc_api\Oclc\OclcAuthorizationTrait;
-use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -106,7 +105,7 @@ abstract class OclcApiBase extends PluginBase implements OclcApiInterface, Conta
   /**
    * Build a URL for the given endpoint.
    *
-   * @param string $endpoint
+   * @param string $endpoint_id
    *   The endpoint identifier.
    * @param array $params
    *   An array of URL parameters and their values.
@@ -115,18 +114,84 @@ abstract class OclcApiBase extends PluginBase implements OclcApiInterface, Conta
    *   A URL string. FALSE if a valid URL could not
    *   be created from the given parameters.
    */
-  protected function buildUrl(string $endpoint, array $params) {
-    if (!array_key_exists($endpoint, $this->getEndpoints())) {
+  protected function buildUrl(string $endpoint_id, array $params) {
+    if (!array_key_exists($endpoint_id, $this->getEndpoints())) {
       return FALSE;
     }
-    $url = $this->getEndpoints()[$endpoint];
-    foreach ($params as $placeholder => $value) {
-      $url = str_replace("{@{$placeholder}}", $value, $url);
+
+    $endpoint = $this->getEndpoints()[$endpoint_id];
+    if (!is_array($endpoint)) {
+      $endpoint = [
+        'url' => $endpoint,
+        'query' => [],
+      ];
     }
-    if (preg_match('/{@[a-z]+(_[a-z]+)*}/', $url)) {
-      return FALSE;
+    $base_url = $this->buildBaseUrl($endpoint, $params);
+    $query = $this->buildUrlQuery($endpoint, $params);
+
+    if (!empty($query)) {
+      return "$base_url?" . http_build_query($query);
     }
-    return $url;
+    return $base_url;
+  }
+
+  /**
+   * Resolve any parameterized parts of the base URL.
+   *
+   * @param array $endpoint
+   *   The endpoint.
+   * @param array $params
+   *   An array of parameters.
+   *
+   * @return string
+   *   A string.
+   */
+  protected function buildBaseUrl(array $endpoint, array $params) {
+    return $this->renderPlaceholder($endpoint['url'], $params);
+  }
+
+  /**
+   * Resolve parameterized parts of each query parameter.
+   *
+   * @param array $endpoint
+   *   The endpoint.
+   * @param array $params
+   *   An array of parameters.
+   *
+   * @return array
+   *   An array of query parameters and values.
+   */
+  protected function buildUrlQuery(array $endpoint, array $params) {
+    $query = $endpoint['query'];
+    foreach (array_keys($query) as $arg) {
+      if (array_key_exists($arg, $params)) {
+        $query[$arg] = $params[$arg];
+      }
+      $query[$arg] = $this
+        ->renderPlaceholder($query[$arg], $params);
+    }
+    return $query;
+  }
+
+  /**
+   * Replaces any placeholders in the subject with a matching value.
+   *
+   * @param string $subject
+   *   The subject.
+   * @param array $placeholders
+   *   Values for each possible placeholder.
+   *
+   * @return string
+   *   The subject string after each placeholder has been replaced.
+   */
+  protected function renderPlaceholder(string $subject, array $placeholders) {
+    preg_match_all('/{@(?<placeholder>[a-zA-Z]+([_-][a-zA-Z]+)*)}/', $subject, $matches);
+    foreach ($matches['placeholder'] as $placeholder) {
+      if (array_key_exists($placeholder, $placeholders)) {
+        $subject = str_replace("{@{$placeholder}}", $placeholders[$placeholder], $subject);
+      }
+    }
+    return $subject;
   }
 
   /**
