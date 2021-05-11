@@ -62,6 +62,9 @@ class OclcApiManager extends DefaultPluginManager implements OclcApiManagerInter
     if ($institution_id = $this->oclcApiConfig()->getInstitutionId()) {
       $configuration[OclcApiConfigInterface::INSTITUTION_ID] = $institution_id;
     }
+    if ($data_center = $this->oclcApiConfig()->getDataCenter()) {
+      $configuration[OclcApiConfigInterface::DATACENTER] = $data_center;
+    }
     return parent::createInstance($plugin_id, $configuration);
   }
 

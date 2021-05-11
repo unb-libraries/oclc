@@ -50,6 +50,21 @@ abstract class OclcApiBase extends PluginBase implements OclcApiInterface, Conta
   }
 
   /**
+   * Default datacenter to use.
+   *
+   * @return string
+   *   A string.
+   *
+   * @see \Drupal\oclc_api\Form\OclcApiSettingsForm::buildForm()
+   */
+  protected function defaultDatacenter() {
+    if (isset($this->configuration[OclcApiConfigInterface::DATACENTER])) {
+      return $this->configuration[OclcApiConfigInterface::DATACENTER];
+    }
+    return FALSE;
+  }
+
+  /**
    * Constructs an OCLC plugin instance.
    *
    * @param array $configuration

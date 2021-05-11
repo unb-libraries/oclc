@@ -11,6 +11,7 @@ interface OclcApiConfigInterface {
 
   const CONFIG_ID = 'oclc_api.settings';
   const INSTITUTION_ID = 'institution_id';
+  const DATACENTER = 'datacenter';
 
   /**
    * Get the institution ID.
@@ -19,5 +20,12 @@ interface OclcApiConfigInterface {
    *   A string.
    */
   public function getInstitutionId();
+
+  /**
+   * Get the datacenter identifier.
+   *
+   * @return string
+   */
+  public function getDataCenter();
 
 }

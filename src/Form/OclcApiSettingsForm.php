@@ -35,12 +35,23 @@ class OclcApiSettingsForm extends ConfigFormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $form = parent::buildForm($form, $form_state);
 
-    $config_names = $this->getEditableConfigNames();
+    $config = $this->config($this->getEditableConfigNames()['default']);
     $form[OclcApiConfigInterface::INSTITUTION_ID] = [
       '#type' => 'textfield',
       '#title' => $this->t('Institution ID'),
-      '#default_value' => $this->config($config_names['default'])
-        ->get(OclcApiConfigInterface::INSTITUTION_ID),
+      '#default_value' => $config->get(OclcApiConfigInterface::INSTITUTION_ID),
+    ];
+
+    $form[OclcApiConfigInterface::DATACENTER] = [
+      '#type' => 'select',
+      '#title' => $this->t('Data center'),
+      '#options' => [
+        'sd00' => $this->t('Dublin'),
+        'sd02' => $this->t('EMEA'),
+        'sd03' => $this->t('Australia'),
+        'sd04' => $this->t('Toronto'),
+      ],
+      '#default_value' => $config->get(OclcApiConfigInterface::DATACENTER),
     ];
 
     return $form;

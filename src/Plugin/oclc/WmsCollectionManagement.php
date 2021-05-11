@@ -26,24 +26,6 @@ use Psr\Http\Message\ResponseInterface;
 class WmsCollectionManagement extends OclcApiBase {
 
   /**
-   * Default datacenter to use.
-   *
-   * Available data centers are:
-   *  - sd00: Dublin
-   *  - sd02: EMEA
-   *  - sd03: Australia
-   *  - sd04: Toronto.
-   *
-   * @return string
-   *   A string.
-   *
-   * @link https://developer.api.oclc.org/wms-collection-management
-   */
-  protected function defaultDatacenter() {
-    return 'sd04';
-  }
-
-  /**
    * {@inheritDoc}
    */
   protected function buildUrl(string $endpoint, array $params) {

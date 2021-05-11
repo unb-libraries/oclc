@@ -46,5 +46,13 @@ class OclcApiConfig implements OclcApiConfigInterface {
       ->get(self::INSTITUTION_ID);
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  public function getDataCenter() {
+    return $this->config()
+      ->get(self::DATACENTER);
+  }
+
 
 }
