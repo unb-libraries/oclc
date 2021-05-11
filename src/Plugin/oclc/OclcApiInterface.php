@@ -41,4 +41,18 @@ interface OclcApiInterface extends PluginInspectionInterface {
    */
   public function get(string $endpoint, array $params);
 
+  /**
+   * @param string $endpoint
+   *   The endpoint to request.
+   * @param string $body
+   *   The message body to send.
+   * @param array $params
+   *   (optional) Parameters, required or optional,
+   *   which the given endpoint supports.
+   *
+   * @return mixed
+   *   An object.
+   */
+  public function post(string $endpoint, string $body, array $params);
+
 }

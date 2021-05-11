@@ -103,6 +103,19 @@ abstract class OclcApiBase extends PluginBase implements OclcApiInterface, Conta
   }
 
   /**
+   * {@inheritDoc}
+   */
+  public function post(string $endpoint, string $body, array $params) {
+    if ($url = $this->buildUrl($endpoint, $params)) {
+      return $this->buildResponse($this->http()->post($url, [
+        'headers' => $this->buildHeaders(),
+        'body' => $body,
+      ]));
+    }
+    return FALSE;
+  }
+
+  /**
    * Build a URL for the given endpoint.
    *
    * @param string $endpoint_id
