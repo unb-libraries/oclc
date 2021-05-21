@@ -24,12 +24,14 @@ use Psr\Http\Message\ResponseInterface;
  *         "startIndex" = "1",
  *         "itemsPerPage" = "25",
  *         "orderBy" = "",
+ *         "wskey" = "",
  *       },
  *     },
  *     "read-collection" = {
  *       "url" = "https://worldcat.org/webservices/kb/rest/collections/{@collection_uid}",
  *       "query" = {
  *         "alt"= "json",
+ *         "wskey" = "",
  *       },
  *     },
  *     "search-entries" = {
@@ -48,12 +50,14 @@ use Psr\Http\Message\ResponseInterface;
  *         "startIndex" = "1",
  *         "itemsPerPage" = "25",
  *         "orderBy" = "",
+ *         "wskey" = "",
  *       },
  *     },
  *     "read-entry" = {
  *       "url" = "https://worldcat.org/webservices/kb/rest/entries/{@entry_uid}",
  *       "query" = {
  *         "alt"= "json",
+ *         "wskey" = "",
  *       },
  *     },
  *     "search-providers" = {
@@ -66,12 +70,14 @@ use Psr\Http\Message\ResponseInterface;
  *         "startIndex" = "1",
  *         "itemsPerPage" = "25",
  *         "orderBy" = "",
+ *         "wskey" = "",
  *       },
  *     },
  *     "read-provider" = {
  *       "url" = "https://worldcat.org/webservices/kb/rest/providers/{@provider_uid}",
  *       "query" = {
  *         "alt"= "json",
+ *         "wskey" = "",
  *       },
  *     },
  *   },
@@ -86,8 +92,9 @@ class WorldCatKnowledgeBase extends OclcApiBase {
   /**
    * {@inheritDoc}
    */
-  protected function buildHeaders() {
-    return ['wskey' => $this->oclcAuthorizer()->getWskey()];
+  protected function buildUrl(string $endpoint, array $params) {
+    $params += ['wskey' => $this->oclcAuthorizer()->getWskey()];
+    return parent::buildUrl($endpoint, $params);
   }
 
   /**
