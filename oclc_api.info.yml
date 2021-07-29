@@ -2,6 +2,7 @@ name: 'OCLC APIs'
 type: module
 description: 'Connect to OCLC APIs in Drupal.'
 core: 8.x
+core_version_requirement: ^8 || ^9
 package: 'Web Services'
 dependencies:
   - key
