@@ -10,7 +10,7 @@
       }
   ],
   "require": {
-    "drupal/key": "1.14"
+    "drupal/key": "^1.14"
   },
   "license": "MIT",
   "authors": [
