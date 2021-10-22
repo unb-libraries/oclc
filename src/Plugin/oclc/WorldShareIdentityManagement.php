@@ -53,6 +53,7 @@ class WorldShareIdentityManagement extends OclcApiBase {
       ->getToken();
     return parent::buildHeaders() + [
       'Authorization' => "Bearer {$token}",
+      'Content-Type' => 'application/scim+json'
     ];
   }
 
