@@ -26,7 +26,11 @@ class WorldCatSearchV2 extends OclcApiBase {
    * {@inheritDoc}
    */
   protected function buildHeaders() {
-    return ['wskey' => $this->oclcAuthorizer()->getWskey()];
+    $token = $this->oclcAuthorizer()
+      ->getToken();
+    return parent::buildHeaders() + [
+      'Authorization' => "Bearer {$token}",
+    ];
   }
 
   /**
