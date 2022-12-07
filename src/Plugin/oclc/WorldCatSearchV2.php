@@ -13,6 +13,12 @@ use Psr\Http\Message\ResponseInterface;
  *   label = @Translation("WorldCat Search API (V2)"),
  *   endpoints = {
  *     "get-bibliographic-resource" = "https://americas.discovery.api.oclc.org/worldcat/search/v2/bibs/{@oclcNumber}",
+ *     "get-bibs-summary-holdings" = {
+ *       "url" = "https://americas.discovery.api.oclc.org/worldcat/search/v2/bibs-summary-holdings",
+ *       "query" = {
+ *         "oclcNumber" = "",
+ *       },
+ *     },
  *   },
  *   scopes = {
  *     "wcapi",
