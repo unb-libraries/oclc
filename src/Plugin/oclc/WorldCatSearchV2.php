@@ -17,6 +17,7 @@ use Psr\Http\Message\ResponseInterface;
  *       "url" = "https://americas.discovery.api.oclc.org/worldcat/search/v2/bibs-summary-holdings",
  *       "query" = {
  *         "oclcNumber" = "",
+ *         "heldInCountry" = "",
  *       },
  *     },
  *   },
