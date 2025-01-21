@@ -46,6 +46,17 @@ class WorldCatSearchV2 extends OclcApiBase {
   /**
    * {@inheritDoc}
    */
+  protected function buildUrlQuery(array $endpoint, array $params) {
+    if (empty($params['heldInCountry'])) {
+      unset($endpoint['query']['heldInCountry']);
+      unset($params['heldInCountry']);
+    }
+    return parent::buildUrlQuery($endpoint, $params);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
   protected function buildResponse(ResponseInterface $response) {
     return json_decode($response->getBody()->getContents());
   }
