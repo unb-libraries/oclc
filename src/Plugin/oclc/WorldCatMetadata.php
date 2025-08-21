@@ -19,9 +19,16 @@ use Psr\Http\Message\ResponseInterface;
  *         "heldInCountry" = "",
  *       },
  *     },
+ *     "search-my-holdings" = {
+ *       "url" = "https://metadata.api.oclc.org/worldcat/search/my-holdings",
+ *       "query" = {
+ *         "barcode" = "",
+ *       },
+ *     },
  *   },
  *   scopes = {
  *     "WorldCatMetadataAPI:view_summary_holdings",
+ *     "WorldCatMetadataAPI:view_my_holdings",
  *   }
  * )
  *
