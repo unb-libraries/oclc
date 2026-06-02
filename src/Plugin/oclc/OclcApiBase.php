@@ -112,6 +112,7 @@ abstract class OclcApiBase extends PluginBase implements OclcApiInterface, Conta
     if ($url = $this->buildUrl($endpoint, $params)) {
       return $this->buildResponse($this->http()->get($url, [
         'headers' => $this->buildHeaders(),
+        'timeout' => 60,
       ]));
     }
     return FALSE;
@@ -125,6 +126,7 @@ abstract class OclcApiBase extends PluginBase implements OclcApiInterface, Conta
       return $this->buildResponse($this->http()->post($url, [
         'headers' => $this->buildHeaders(),
         'body' => $body,
+        'timeout' => 60,
       ]));
     }
     return FALSE;
